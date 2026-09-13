@@ -1,8 +1,8 @@
 {
-  "name": "stellar-facts",
+  "name": "progress-hooks",
   "type": "module",
   "version": "1.0.0",
-  "description": "A tiny sample site built with Astro 7 — bite-sized facts about space",
+  "description": "Educational demo: a pre-commit hook plus agent instructions that keep a progress graph (doc/progress-indicator.md) updated as work is committed. Ships with a tiny sample Astro site as demo payload.",
   "scripts": {
     "prepare": "bash .githooks/install.sh",
     "dev": "astro dev",

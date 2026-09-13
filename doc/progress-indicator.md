@@ -1,7 +1,9 @@
-# Progress Indicator — Stellar Facts
+# Progress Indicator — progress-hooks
 
-> Demo/educational document. It tracks what has been built so far in this sample
-> Astro project and what sample tasks are planned for the next phases.
+> Demo/educational document, and the heart of this repo's purpose: it tracks
+> what has been built so far in this sample Astro project and what sample
+> tasks are planned for the next phases. AI agents keep it updated on every
+> commit (see `AGENTS.md` and the pre-commit hook in `.githooks/`).
 > Render this file in any Mermaid-capable viewer (GitHub, GitLab, VS Code, etc.)
 > to see the diagrams.
 
@@ -9,7 +11,8 @@
 
 ## Phase 1 — Foundation (done ✅)
 
-- Astro 7 project scaffolded (`astro.config.mjs`, `tsconfig.json`, npm scripts).
+- Sample site: **Stellar Facts**, a tiny Astro 7 site with bite-sized facts
+  about space — the demo payload this tooling runs against.
 - Content collection `facts` defined in `src/content.config.ts` with a Zod schema
   (title, tagline, summary, date, wow 0–100, tags).
 - 8 markdown facts published under `src/data/facts/*.md`.
@@ -34,7 +37,7 @@ after is the planned Phase 2/3 work.
 
 ```mermaid
 gantt
-    title Stellar Facts - project progress
+    title progress-hooks - project progress
     dateFormat YYYY-MM-DD
     axisFormat %b %d
 
