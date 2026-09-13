@@ -1,0 +1,18 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FactCard from '../../components/FactCard.astro';
+
+const facts = (await getCollection('facts')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<BaseLayout title="All facts — Stellar Facts" description="Every space fact on Stellar Facts, newest first.">
+  <h1 style="font-size: 2rem;">All facts</h1>
+  <p class="muted">Sorted by publication date, newest first.</p>
+
+  <ul class="card-grid" style="margin-top: 2rem;">
+    {facts.map((fact) => <FactCard fact={fact} />)}
+  </ul>
+</BaseLayout>

@@ -1,0 +1,19 @@
+{
+  "name": "stellar-facts",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "A tiny sample site built with Astro 7 — bite-sized facts about space",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^7.3.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^6.0.3"
+  }
+}

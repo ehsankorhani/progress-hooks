@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  fact: CollectionEntry<'facts'>;
+}
+
+const { fact } = Astro.props;
+const { title, tagline, wow, tags } = fact.data;
+---
+
+<li>
+  <a class="card" href={`/facts/${fact.id}/`}>
+    <span class="wow-badge" title="Wow factor: {wow}/100">🔥 {wow}</span>
+    <h3>{title}</h3>
+    <p>{tagline}</p>
+    <div>
+      {tags.map((tag) => <span class="tag">#{tag}</span>)}
+    </div>
+  </a>
+</li>

@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const stats = [
+  ['Astro version', Astro.generator.replace('Astro v', '')],
+  ['Rendering', 'Static (prerendered at build time)'],
+  ['Facts published', '8'],
+  ['Client JS bundles', '1 tiny starfield script'],
+];
+---
+
+<BaseLayout title="About — Stellar Facts" description="How this sample Astro site is put together.">
+  <article style="max-width: 44rem; margin-inline: auto;">
+    <h1>About this site</h1>
+    <p class="muted">
+      Stellar Facts is a small sample project that shows off the basics of Astro 7:
+      file-based routing, content collections with type-safe frontmatter, a dynamic route,
+      and one small client-side script — all prerendered to plain static HTML.
+    </p>
+
+    <h2>How it's built</h2>
+    <ul>
+      <li><strong>Content collections</strong> — facts live in <code>src/data/facts/*.md</code>, validated by a Zod schema in <code>src/content.config.ts</code>.</li>
+      <li><strong>Dynamic routing</strong> — one <code>[...slug].astro</code> file generates a page per fact.</li>
+      <li><strong>Scoped styles + global CSS</strong> — the theme lives in <code>src/styles/global.css</code>, small tweaks inline where needed.</li>
+      <li><strong>Islands-free</strong> — no framework runtime; the only client JS is a canvas starfield.</li>
+    </ul>
+
+    <h2>Quick stats</h2>
+    <table>
+      <tbody>
+        {stats.map(([label, value]) => (
+          <tr>
+            <td style="padding-right: 1.5rem; color: var(--muted);">{label}</td>
+            <td>{value}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    <h2>Try it yourself</h2>
+    <p>Clone the project and run:</p>
+    <pre><code>npm install
+npm run dev</code></pre>
+  </article>
+</BaseLayout>

@@ -1,0 +1,62 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Bite-sized, verified facts about space, planets, and stars.' } = Astro.props;
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const nav = [
+  { href: '/', label: 'Home' },
+  { href: '/facts/', label: 'Facts' },
+  { href: '/about/', label: 'About' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <canvas id="stars-js" aria-hidden="true"></canvas>
+
+    <header class="site-header">
+      <div class="inner">
+        <a href="/" class="brand">★ <span>Stellar</span>&nbsp;Facts</a>
+        <nav class="site-nav" aria-label="Main">
+          {
+            nav.map((item) => (
+              <a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined}>
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="inner">
+        <p>© 2026 Stellar Facts — a sample site built with {Astro.generator}.</p>
+        <p>Content is real astronomy, lightly simplified.</p>
+      </div>
+    </footer>
+
+    <script>
+      import '../scripts/stars.js';
+    </script>
+  </body>
+</html>
