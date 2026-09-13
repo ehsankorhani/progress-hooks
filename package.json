@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "A tiny sample site built with Astro 7 — bite-sized facts about space",
   "scripts": {
+    "prepare": "bash .githooks/install.sh",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",

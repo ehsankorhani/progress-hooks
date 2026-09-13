@@ -18,6 +18,9 @@
 - Shared `BaseLayout.astro` with header/nav/footer and `FactCard.astro` component.
 - Global theme in `src/styles/global.css` plus scoped styles.
 - Single client-side script: animated canvas starfield (`src/scripts/stars.js`).
+- Progress-doc automation: `AGENTS.md` instructs AI agents to keep this
+  document updated, and a deterministic pre-commit hook (`.githooks/`, wired
+  via the npm `prepare` script) rejects code commits without a doc update.
 
 ## Phase 2 — Next phases (planned 🚧)
 
@@ -41,6 +44,7 @@ gantt
     Home, facts, 404 and about pages    :done, pages, 2026-09-05, 2026-09-09
     Layout, FactCard and global CSS     :done, ui, 2026-09-07, 2026-09-11
     Starfield client script             :done, stars, 2026-09-10, 2026-09-12
+    Pre-commit progress-doc check       :done, hookcheck, 2026-09-12, 2026-09-13
 
     section Phase 2 planned
     Search and tag filter pages         :active, search, 2026-09-14, 7d
@@ -61,8 +65,9 @@ gantt
 flowchart LR
     subgraph done["DONE - Phase 1"]
         A["Scaffold"] --> B["Content collection"]
-        B --> C["Pages and layout"]
+        B -->        C["Pages and layout"]
         C --> D["Starfield script"]
+        D --> K["Pre-commit doc check"]
     end
 
     subgraph next["NEXT - Phase 2"]

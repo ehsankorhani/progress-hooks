@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+#
+# pre-commit hook: fast deterministic verifier (no LLM call).
+#
+# Strategy ("hybrid"):
+#   1. The AI agent that did the work updates doc/progress-indicator.md in its
+#      session, guided by AGENTS.md / CLAUDE.md.
+#   2. This hook only VERIFIES that rule: if code files are staged but the
+#      progress doc was not touched, the commit is aborted.
+#
+# Setup (after cloning):     npm install   (installs the hook via "prepare")
+# Skip once, in emergencies: git commit --no-verify
+# Disable for a repo:        git config hooks.progressIndicator.disabled true
+#
+set -euo pipefail
+
+TARGET="doc/progress-indicator.md"
+
+DISABLED="$(git config --get hooks.progressIndicator.disabled || true)"
+if [ "${DISABLED:-}" = "true" ]; then
+  echo "[progress-indicator] disabled via git config; skipping."
+  exit 0
+fi
+
+# Docs and tooling commits never require a doc update (and this prevents the
+# check from recursing on its own commits).
+is_exempt() {
+  case "$1" in
+    "$TARGET"|".githooks/"*|"AGENTS.md"|"CLAUDE.md") return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+mapfile -t STAGED < <(git diff --cached --name-only --diff-filter=d)
+
+DOC_STAGED=0
+CODE_STAGED=()
+for f in "${STAGED[@]}"; do
+  if is_exempt "$f"; then
+    [ "$f" = "$TARGET" ] && DOC_STAGED=1
+    continue
+  fi
+  CODE_STAGED+=("$f")
+done
+
+if [ "${#CODE_STAGED[@]}" -eq 0 ]; then
+  # Nothing that requires a doc update.
+  exit 0
+fi
+
+if [ "$DOC_STAGED" -eq 1 ]; then
+  echo "[progress-indicator] OK: $TARGET is part of this commit."
+  exit 0
+fi
+
+# Code staged but the doc untouched -> fail with guidance.
+{
+  echo "[progress-indicator] code changes staged but $TARGET was not updated."
+  echo
+  echo "Required (see AGENTS.md): update $TARGET to reflect this work —"
+  echo "  - move implemented backlog tasks (T1..T7) to the done phase and"
+  echo "    update the mermaid gantt/flowchart, or"
+  echo "  - add an entry for brand-new work."
+  echo
+  echo "Options:"
+  echo "  - update the doc, stage it (git add $TARGET), and commit again"
+  echo "  - skip this once:   git commit --no-verify"
+  echo "  - disable for repo: git config hooks.progressIndicator.disabled true"
+} >&2
+exit 1
