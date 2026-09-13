@@ -213,6 +213,26 @@ a {
   margin-right: 0.35rem;
 }
 
+/* ---------- sort control ---------- */
+
+.sort-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.sort-bar select {
+  font: inherit;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+}
+
 /* ---------- misc ---------- */
 
 .muted {

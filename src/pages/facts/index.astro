@@ -10,9 +10,40 @@ const facts = (await getCollection('facts')).sort(
 
 <BaseLayout title="All facts — Stellar Facts" description="Every space fact on Stellar Facts, newest first.">
   <h1 style="font-size: 2rem;">All facts</h1>
-  <p class="muted">Sorted by publication date, newest first.</p>
+  <p class="muted">Sorted by publication date, newest first — or rank them by wow factor.</p>
 
-  <ul class="card-grid" style="margin-top: 2rem;">
+  <div class="sort-bar">
+    <label for="fact-sort">Sort by</label>
+    <select id="fact-sort">
+      <option value="date">Newest first</option>
+      <option value="wow-desc">Wow factor · high to low</option>
+      <option value="wow-asc">Wow factor · low to high</option>
+    </select>
+  </div>
+
+  <ul class="card-grid" style="margin-top: 2rem;" data-fact-list>
     {facts.map((fact) => <FactCard fact={fact} />)}
   </ul>
+
+  <script>
+    const list = document.querySelector<HTMLUListElement>('[data-fact-list]');
+    const sortControl = document.querySelector<HTMLSelectElement>('#fact-sort');
+
+    if (list && sortControl) {
+      const originalOrder = Array.from(list.children) as HTMLElement[];
+      const wowOf = (item: HTMLElement) => Number(item.dataset.wow ?? 0);
+
+      sortControl.addEventListener('change', () => {
+        const mode = sortControl.value;
+        const next =
+          mode === 'date'
+            ? originalOrder
+            : originalOrder
+                .slice()
+                .sort((a, b) => (mode === 'wow-desc' ? wowOf(b) - wowOf(a) : wowOf(a) - wowOf(b)));
+
+        for (const item of next) list.append(item);
+      });
+    }
+  </script>
 </BaseLayout>

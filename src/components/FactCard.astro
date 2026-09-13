@@ -9,7 +9,7 @@ const { fact } = Astro.props;
 const { title, tagline, wow, tags } = fact.data;
 ---
 
-<li>
+<li data-wow={wow}>
   <a class="card" href={`/facts/${fact.id}/`}>
     <span class="wow-badge" title="Wow factor: {wow}/100">🔥 {wow}</span>
     <h3>{title}</h3>

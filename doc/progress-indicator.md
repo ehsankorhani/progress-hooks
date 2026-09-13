@@ -25,11 +25,18 @@
   document updated, and a deterministic pre-commit hook (`.githooks/`, wired
   via the npm `prepare` script) rejects code commits without a doc update.
 
-## Phase 2 — Next phases (planned 🚧)
+## Phase 2 — Search, filters and polish (in progress 🚧)
 
-See the **Sample Backlog** below for the concrete demo tasks. The gantt chart
-shows the rough timeline: everything before "today" is shipped work; everything
-after is the planned Phase 2/3 work.
+Shipped from the **Sample Backlog** below:
+
+- **T4 — Wow-score filter** ✅: `/facts/` gained a "Sort by" control
+  (newest first / wow high→low / wow low→high). `FactCard.astro` exposes
+  `data-wow` and the page script reorders the existing cards client-side, so
+  the page stays static HTML.
+
+Still planned: the remaining demo tasks. The gantt chart shows the rough
+timeline: everything before "today" is shipped work; everything after is the
+planned Phase 2/3 work.
 
 ---
 
@@ -49,6 +56,9 @@ gantt
     Starfield client script             :done, stars, 2026-09-10, 2026-09-12
     Pre-commit progress-doc check       :done, hookcheck, 2026-09-12, 2026-09-13
 
+    section Phase 2 done
+    Wow-score filter in UI (T4)         :done, wow, 2026-09-13, 1d
+
     section Phase 2 planned
     Search and tag filter pages         :active, search, 2026-09-14, 7d
     RSS feed and sitemap                :rss, after search, 3d
@@ -66,11 +76,12 @@ gantt
 
 ```mermaid
 flowchart LR
-    subgraph done["DONE - Phase 1"]
+    subgraph done["DONE - Phase 1 + T4"]
         A["Scaffold"] --> B["Content collection"]
         B -->        C["Pages and layout"]
         C --> D["Starfield script"]
         D --> K["Pre-commit doc check"]
+        C --> L["Wow-score filter (T4)"]
     end
 
     subgraph next["NEXT - Phase 2"]
@@ -101,15 +112,15 @@ flowchart LR
 
 Tasks created for demonstration/educational purposes on this project:
 
-| #  | Task                          | Description (sample)                                                        | Target file(s)                                  |
-| -- | ----------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------- |
-| T1 | Tag filter page               | Add `/facts/tags/[tag].astro` listing facts per tag using the collection.   | `src/pages/facts/tags/[tag].astro`              |
-| T2 | RSS feed + sitemap            | Generate an RSS feed for the facts collection and a sitemap for the build.  | `src/pages/rss.xml.js`                          |
-| T3 | Dark/light theme toggle       | Small client-side toggle persisting the choice in `localStorage`.           | `src/components/ThemeToggle.astro`              |
-| T4 | Wow-score filter in UI        | Sort/filter the facts list by the `wow` frontmatter value (e.g. top 🔥).    | `src/pages/facts/index.astro`                   |
-| T5 | Fact-of-the-day widget        | Pick one fact per day (date-seeded) and feature it on the homepage.         | `src/pages/index.astro`                         |
-| T6 | Lighthouse + a11y pass        | Check contrast, focus states, and reduced-motion for the starfield canvas.  | `src/scripts/stars.js`, `src/styles/global.css` |
-| T7 | Deploy to static hosting      | Wire the `dist/` build output to a static host of choice.                   | CI config / hosting dashboard                   |
+| #  | Task                          | Description (sample)                                                        | Target file(s)                                  | Status   |
+| -- | ----------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------- | -------- |
+| T1 | Tag filter page               | Add `/facts/tags/[tag].astro` listing facts per tag using the collection.   | `src/pages/facts/tags/[tag].astro`              | planned  |
+| T2 | RSS feed + sitemap            | Generate an RSS feed for the facts collection and a sitemap for the build.  | `src/pages/rss.xml.js`                          | planned  |
+| T3 | Dark/light theme toggle       | Small client-side toggle persisting the choice in `localStorage`.           | `src/components/ThemeToggle.astro`              | planned  |
+| T4 | Wow-score filter in UI        | Sort/filter the facts list by the `wow` frontmatter value (e.g. top 🔥).    | `src/pages/facts/index.astro`                   | done ✅  |
+| T5 | Fact-of-the-day widget        | Pick one fact per day (date-seeded) and feature it on the homepage.         | `src/pages/index.astro`                         | planned  |
+| T6 | Lighthouse + a11y pass        | Check contrast, focus states, and reduced-motion for the starfield canvas.  | `src/scripts/stars.js`, `src/styles/global.css` | planned  |
+| T7 | Deploy to static hosting      | Wire the `dist/` build output to a static host of choice.                   | CI config / hosting dashboard                   | planned  |
 
 > These tasks are intentionally lightweight — they exist to demonstrate how a
 > backlog and a progress graph work together, not as a real roadmap.
